@@ -1,0 +1,39 @@
+{% extends "news/base.html" %}
+
+{% block title %} Details {% endblock %}
+
+{% block content %}
+    <h1>Title: {{ news.title }}</h1>
+    <h3>Content: {{ news.content }}</h3>
+    <h3>Created at: {{ news.created_at }}</h3>
+    <br>
+    <h3>Comments</h3>
+    <ul class="list-group">
+        {% for comment in coms %}
+            <li class="list-group-item">
+                {{ comment.content }} - {{ comment.created_at }}
+                {% if user == comment.author %}
+                <form action="{% url 'news:delete_comment' news.id comment.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Add Comment</h3>
+    {% if user.is_authenticated %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="content" class="form-label">Text:</label>
+            <textarea class="form-control" name="content" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add comment</button>
+    </form>
+    {% else %}
+        <p>Available for authenticated users only</p>
+    {% endif %}
+{% endblock %}
+

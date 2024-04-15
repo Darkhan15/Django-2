@@ -1,0 +1,22 @@
+{% extends "news/base.html" %}
+
+{% block title %} Add News {% endblock %}
+
+{% block content %} 
+<div class="container mt-4">
+    <h1>Add News</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" class="form-control" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">Content:</label>
+            <textarea class="form-control" name="content" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add News</button>
+    </form>
+</div>
+{% endblock %}
+

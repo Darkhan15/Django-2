@@ -1,0 +1,43 @@
+{% extends "news/base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <ul class="text-danger">
+        {% for error in form.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    <form action="{% url 'sign_up' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">{{ form.username.label }}</label>
+            {{ form.username }}
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ form.email.label }}</label>
+            {{ form.email }}
+        </div>
+        <div class="mb-3">
+            <label for="first_name" class="form-label">{{ form.first_name.label }}</label>
+            {{ form.first_name }}
+        </div>
+        <div class="mb-3">
+            <label for="last_name" class="form-label">{{ form.last_name.label }}</label>
+            {{ form.last_name }}
+        </div>
+        <div class="mb-3">
+            <label for="password1" class="form-label">{{ form.password1.label }}</label>
+            {{ form.password1 }}
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">{{ form.password2.label }}</label>
+            {{ form.password2 }}
+        </div>
+        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    </form>
+    <p class="mt-3">Already have an account? <a href="/login">Login</a></p>
+</div>
+{% endblock %}
+

@@ -1,0 +1,36 @@
+{% extends "news/base.html" %}
+
+{% block title %} News {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        {% for article in news %}
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <strong>{{ article.author.username }}</strong>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'news:detail' article.id %}">{{ article.title }}</a>
+                    </h5>
+                </div>
+                <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                    <small>{{ article.created_at }}</small>
+                    {% if user == article.author or perms.news.delete_news %}
+                    <form action="{% url 'news:delete_news' article.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No news articles available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
